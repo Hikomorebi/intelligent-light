@@ -68,18 +68,26 @@ async def light_loop(mclient):
 
     mclient.loop_start()
 
+    # while True:
+    #     try:
+    #         data = bles.status_update()
+    #         #调用bles成员函数读取扫描到的光照强度数值
+    #     except Exception as e:
+    #         print("BLE SCAN error:", e)
+    #         continue
+        
+	# 	#上传扫描到的光照强度数值
+    #     mqtt_report(mclient,data.lightlevel)
+        
+    #     time.sleep(0.3)
     while True:
         try:
             data = bles.status_update()
-            #调用bles成员函数读取扫描到的光照强度数值
         except Exception as e:
             print("BLE SCAN error:", e)
             continue
-        
-		#上传扫描到的光照强度数值
         mqtt_report(mclient,data.lightlevel)
-        
-        await time.sleep(0.3)
+        time.sleep(0.3)
 
 async def main():
     mqtt_client = None

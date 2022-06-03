@@ -42,6 +42,8 @@ class LightScanner():
             return scan_processor.results
 
         return scan_processor.results
+        
+        
 
 class ScanProcessor:
 
