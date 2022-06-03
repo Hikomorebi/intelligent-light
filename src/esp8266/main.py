@@ -124,10 +124,16 @@ async def light_loop():
     #     await uasyncio.sleep_ms(2000)
 
     time_cnt = 0
+    change_cnt = 0
+    twinkle_cnt = 0
+    twinkle_cycle = 20
+
 
     mqtt_client.subscribe(MQTT_CONTROL_TOPIC.encode())
 
     while True:
+        if change_cnt > 0:
+            change_cnt -= 1
         mqtt_client.check_msg()
 
         switch_status = button.state()
@@ -140,7 +146,24 @@ async def light_loop():
         
         if light_changed:
             light_changed = False
+            change_cnt = 3 * twinkle_cycle
+            twinkle_cnt = 0
             led.rgb_light(255 if color==0 else 0, 255 if color==1 else 0, 255 if color==2 else 0, brightness/100.0)
+
+        if change_cnt == 0:
+            if twinkle_cnt >= 6 * twinkle_cycle:
+                twinkle_cnt = 0 
+            elif (twinkle_cnt // twinkle_cycle) == 0:
+                led.rgb_light(255, 0 ,0 ,0.1)
+                twinkle_cnt += 1
+            elif (twinkle_cnt // twinkle_cycle) <= 2:
+                led.rgb_light(0, 255, 0, 0.5)
+                twinkle_cnt += 1
+            elif (twinkle_cnt // twinkle_cycle) <= 5:
+                led.rgb_light(0, 0, 255, 1.0)
+                twinkle_cnt += 1
+
+
 
         # 调整为0.02*100=2秒上报一次
         if time_cnt >= 100:
