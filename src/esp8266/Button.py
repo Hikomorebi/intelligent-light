@@ -2,9 +2,11 @@ from machine import ADC
 from machine import Pin, Signal
 class Button():
     def __init__(self,pin):
-        self.buttonpin = Pin(pin, Pin.OUT)
-        self.relayled = Signal(self.relaypin, invert=True) # 将信号置反, 实现开与关和输入信号对应
+        self.buttonpin = Pin(pin, Pin.IN)
+        self.last_status = self.buttonpin.value()
+
     
     def state(self):
-        self.sta = 1
-        return self.sta
+        #self.last_status = 1
+        self.last_status = self.buttonpin.value()
+        return self.last_status
