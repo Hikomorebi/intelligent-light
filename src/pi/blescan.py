@@ -26,7 +26,7 @@ class LightScanner():
     def _get_data(self):
 
         scan_processor = ScanProcessor(self._name)
-        scanner = Scanner().withDelegate(scan_processor)
+        scanner = Scanner(1).withDelegate(scan_processor)
         scanner.scan(self.SCAN_TIMEOUT, passive=True)
 
         with timeout(

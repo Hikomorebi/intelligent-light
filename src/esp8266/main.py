@@ -12,15 +12,15 @@ from umqtt.simple import MQTTClient
 """
 Wi-Fi Gateway : SSID and Password
 """
-WIFI_AP_SSID = "你的WiFi名称"
-WIFI_AP_PSW = "你的wifi密码"
+WIFI_AP_SSID = "komorebi"
+WIFI_AP_PSW = "asdfghjkl"
 
 """
 QCloud Device Info
 """
-DEVICE_NAME = "你的设备名称 (可在腾讯云IOT平台中设备调试下设备信息中查看)"
-PRODUCT_ID = "你的产品ID (可在腾讯云IOT平台中设备调试下设备信息中查看)"
-DEVICE_KEY = "你的设备密钥 (可在腾讯云IOT平台中设备调试下设备信息中查看)"
+DEVICE_NAME = "Led_1"
+PRODUCT_ID = "WNSBO8V9GJ"
+DEVICE_KEY = "6e5jWv++n7v5DznjpzkVbw=="
 
 """
 MQTT topic
@@ -82,8 +82,8 @@ async def mqtt_connect():
     MQTT_SERVER = PRODUCT_ID + ".iotcloud.tencentdevices.com"
     MQTT_PORT = 1883
     MQTT_CLIENT_ID = PRODUCT_ID+DEVICE_NAME
-    MQTT_USER_NAME = "你的用户名"
-    MQTTT_PASSWORD = "你的密码"
+    MQTT_USER_NAME = "WNSBO8V9GJLed_1;12010126;ES29I;1654689393"
+    MQTTT_PASSWORD = "a7da552db0ef10508e17e86768d89cf74525cd848f39e42410971bb97f67242f;hmacsha256"
 
     mqtt_client = MQTTClient(MQTT_CLIENT_ID, MQTT_SERVER, MQTT_PORT,MQTT_USER_NAME, MQTTT_PASSWORD, 60)
     mqtt_client.set_callback(mqtt_callback)

@@ -10,8 +10,8 @@ import paho.mqtt.client as MQTTClient
 QCloud Device Info
 """
 DEVICE_NAME = "Lightsensor_1"
-PRODUCT_ID = "你的产品ID (可在腾讯云IOT平台中设备调试下设备信息中查看)"
-DEVICE_KEY = "你的设备密钥 (可在腾讯云IOT平台中设备调试下设备信息中查看)"
+PRODUCT_ID = "OTPFS209VP"
+DEVICE_KEY = "Vq768IJeXJrBIEzdnteVQw=="
 
 """
 MQTT topic
@@ -35,8 +35,8 @@ async def mqtt_connect():
     MQTT_SERVER = PRODUCT_ID + ".iotcloud.tencentdevices.com"
     MQTT_PORT = 1883
     MQTT_CLIENT_ID = PRODUCT_ID+DEVICE_NAME
-    MQTT_USER_NAME = "你的用户名"
-    MQTTT_PASSWORD = "你的密码"
+    MQTT_USER_NAME = "OTPFS209VPLightsensor_1;12010126;FVO7F;1654699892"
+    MQTTT_PASSWORD = "10a882943335d7f95be625a5a019017570e993f8b4e6ce6576cb75556062b47c;hmacsha256"
 
     mqtt_client = MQTTClient.Client(MQTT_CLIENT_ID)
     mqtt_client.username_pw_set(MQTT_USER_NAME, MQTTT_PASSWORD)
@@ -70,12 +70,14 @@ async def light_loop(mclient):
 
     while True:
         try:
+            data = bles.status_update()
             #调用bles成员函数读取扫描到的光照强度数值
-		except Exception as e:
+        except Exception as e:
             print("BLE SCAN error:", e)
             continue
         
 		#上传扫描到的光照强度数值
+        mqtt_report(mclient,data.lightlevel)
         
         await time.sleep(0.3)
 
